@@ -1,0 +1,54 @@
+# Build output
+build/
+build-*/
+out/
+cmake-build-*/
+bin/
+obj/
+
+# CMake generated
+CMakeCache.txt
+CMakeFiles/
+CMakeUserPresets.json
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+Makefile
+*.ninja
+.ninja_deps
+.ninja_log
+
+# Compiled binaries and intermediates
+*.exe
+*.dll
+*.so
+*.dylib
+*.a
+*.lib
+*.o
+*.obj
+*.pdb
+*.ilk
+*.exp
+*.idb
+
+# Qt Creator
+CMakeLists.txt.user
+CMakeLists.txt.user.*
+*.autosave
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+*.sln
+*.vcxproj*
+
+# VS Code / CLion
+.vscode/
+.idea/
+
+# OS junk
+Thumbs.db
+Desktop.ini
+.DS_Store
