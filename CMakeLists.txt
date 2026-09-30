@@ -23,6 +23,10 @@ add_executable(logger_stress_test tests/stress_test.cpp)
 target_link_libraries(logger_stress_test PRIVATE logger)
 add_test(NAME stress COMMAND logger_stress_test)
 
+add_executable(logger_error_macro_test tests/error_macro_test.cpp)
+target_link_libraries(logger_error_macro_test PRIVATE logger)
+add_test(NAME error_macro COMMAND logger_error_macro_test)
+
 include(GNUInstallDirs)
 install(TARGETS Logger_osyncstream
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}

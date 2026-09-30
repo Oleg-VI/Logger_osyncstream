@@ -126,8 +126,11 @@ for simplicity.
   practice it does, but it is not guaranteed for every static object.
 - The thread ID format depends on the platform: large system IDs with MSVC,
   small sequential numbers with MinGW/winpthreads.
-- On Windows, `<windows.h>` defines a macro named `ERROR`. Include `log.h`
-  first, or `#undef ERROR` before including it.
+- On Windows, `<windows.h>` defines a macro named `ERROR`. `log.h` hides it
+  while declaring the levels and then restores it, so the header compiles in
+  any include order. But if `<windows.h>` is included first, your own
+  `logger(ERROR)` becomes `logger(0)` and fails to compile. Include `log.h`
+  first, or `#define NOGDI` before `<windows.h>` if you do not need GDI.
 
 **Rule of thumb:** if you need files, filtering, structured output or high
 throughput, use a full logging framework. If you need correct, readable,
@@ -155,6 +158,10 @@ output by redirecting `std::cout`'s stream buffer and checks that:
 - there are no blank, split or mixed lines;
 - messages from each thread appear in the order they were written;
 - no message is lost.
+
+[`tests/error_macro_test.cpp`](tests/error_macro_test.cpp) defines `ERROR` the
+way `<windows.h>` does before including `log.h`, and checks that the header
+still compiles and that the macro is left unchanged.
 
 ## Building
 

@@ -7,9 +7,17 @@
 // -- Log levels ----------------------------------------------------------------
 // Closed enum: clients cannot extend this set.
 // "using enum" lets main.cpp write DEBUG / INFO / WARNING / ERROR directly.
-// Note: on Windows, <windows.h> defines ERROR as 0 -- avoid including it before
-// this header, or add "#undef ERROR" prior to including log.h.
+//
+// <windows.h> (wingdi.h) defines ERROR as a macro. It is hidden only while the
+// enum is declared and restored afterwards, so this header compiles in any
+// include order and the client's macro stays untouched. If <windows.h> comes
+// first, the client's ERROR expands to 0 and logger(ERROR) fails to compile
+// (no int -> LogLevel conversion) instead of silently misbehaving;
+// "#define NOGDI" before <windows.h> removes the macro.
+#pragma push_macro("ERROR")
+#undef ERROR
 enum class LogLevel { DEBUG, INFO, WARNING, ERROR };
+#pragma pop_macro("ERROR")
 using enum LogLevel;
 
 // -- LogMessage ----------------------------------------------------------------
