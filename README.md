@@ -142,16 +142,26 @@ A C++20 compiler whose standard library supports `<syncstream>`:
 - Clang: with libstdc++ it works as above. libc++ added `<syncstream>` late,
   so check your version.
 
-Tested with **MinGW-w64 GCC 13.1** and **MSVC (Visual Studio 2026)**. The tests
-used the sample `main.cpp` and a stress test with 8 threads × 2000 messages,
-random `yield`/`sleep`, and checks of the line format and of per-thread order.
-Both builds had no warnings with `-Wall -Wextra` and `/W4`.
+Tested with **MinGW-w64 GCC 13.1** and **MSVC (Visual Studio 2026)**, with no
+warnings at `-Wall -Wextra -Wpedantic` and `/W4`.
+
+## Tests
+
+[`tests/stress_test.cpp`](tests/stress_test.cpp) starts 8 threads that write
+2000 messages each, with random `yield` and `sleep` calls. It captures the
+output by redirecting `std::cout`'s stream buffer and checks that:
+
+- every line is complete and matches the log format;
+- there are no blank, split or mixed lines;
+- messages from each thread appear in the order they were written;
+- no message is lost.
 
 ## Building
 
 ```bash
 cmake -S . -B build
 cmake --build build
+ctest --test-dir build --output-on-failure
 ```
 
 Or add `log.h` and `log.cpp` to any C++20 project.
