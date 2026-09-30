@@ -1,5 +1,7 @@
 # Logger_osyncstream
 
+[![Build and test](https://github.com/Oleg-VI/Logger_osyncstream/actions/workflows/build.yml/badge.svg)](https://github.com/Oleg-VI/Logger_osyncstream/actions/workflows/build.yml)
+
 A tiny, thread-safe console logger for C++20, built on `std::osyncstream`.
 
 Two files (`log.h` + `log.cpp`), about 150 lines in total, only the standard
