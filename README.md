@@ -169,8 +169,12 @@ still compiles and that the macro is left unchanged.
 
 ```bash
 cmake -S . -B build
-cmake --build build
-ctest --test-dir build --output-on-failure
+cmake --build build --config Release
+ctest --test-dir build -C Release --output-on-failure
 ```
+
+`--config` and `-C` are needed for multi-config generators (Visual Studio,
+Xcode, Ninja Multi-Config). Single-config generators (Ninja, Makefiles) ignore
+them, so the same commands work everywhere.
 
 Or add `log.h` and `log.cpp` to any C++20 project.
